@@ -14,14 +14,11 @@ urlpatterns = [
     # Tells Django to redirect us to the views.index function if the incoming request is for '/'
 	url(r'^$', views.index, name="index"),
 
+    # /login/
+    url(r'^login/', include('login.urls'), name="login"),
+
     # Tells Django to redirect us to the default admin module that Django gives us if
     # the incoming request is for '/admin/'
     url(r'^admin/', admin.site.urls),
 
-    # Tells Django to look in the 'user_page.urls' file in order to process any requests that 
-    # are of the format /user_page/<anything>/... 
-    # This lets us offload all the work of routing requests that come to any sub-directory of /user_page
-    # into the user_page.urls file, which is located at "/django_example/user_page/urls"
-    # include() is a Django-provided function. Note we imported it at the top of this file.
-    url(r'^user_page/', include('user_page.urls')),
 ]

@@ -34,6 +34,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# Remember to add whatever apps that you create to this list
+
+"""
+Whenever you run python manage.py migrate, it's going to look for this list
+For each one:
+    - Go in that apps directory
+    - Looks and makes sure that the tables that each app needs are set up in the 
+      database.
+"""
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,13 +50,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'login.apps.LoginConfig'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # Helps us with authentication
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    
+    # Helps us with authentication
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
