@@ -25,8 +25,12 @@ SECRET_KEY = 'mq+699fvdhn&4qkbwr9r#1ae4#ssfm(i(cc-bj45g$mtw8$-nl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# You might need to add http://127.0.0.1 for this to work on your computer:
+# ALLOWED_HOSTS = ['http://127.0.0.1']
+# You definitely will need to add the host of the web server once you host the app on something like elastic beanstalk 
+#   When hosting on EB, you can get the host from an environment variable, and
+#   this lets us keep this thing so that the url is not hard-coded 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -49,6 +53,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+"""
+This is the variable that tells Django where to look in order to process
+incoming requests. This is a string representation of a particular module in 
+our project. 
+"""
 ROOT_URLCONF = 'django_example.urls'
 
 TEMPLATES = [
