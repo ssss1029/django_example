@@ -5,26 +5,30 @@ from django.http import HttpResponse
 from django.template import loader
 # Authentication imports
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from .models import User
 
 # Create your views here.
 def index(request):
 	if request.method == "GET": 
-		# Give back the login page
-		template = loader.get_template('login/index.html')
-		context = {}
-		return HttpResponse(template.render(context, request))
+		# Check if the user is already logged in
+		if not request.user.is_authenticated:		
+			# Give back the login page
+			template = loader.get_template('login/index.html')
+			context = {}
+			return HttpResponse(template.render(context, request))
+		else:
+			# Redirect back to the home page
+			return redirect('/user_page/')
 	elif request.method == "POST":
 		# Actually log the user object in
-		if request.POST['first_name'] and request.POST['last_name'] and request.POST['email'] and request.POST['username'] and request.POST['password'] and request.POST['confirm_password']:
+		if request.POST.get('first_name', False) and request.POST.get('last_name', False) and request.POST.get('email', False) and request.POST.get('username', False) and request.POST.get('password', False) and request.POST.get('confirm_password', False):
 			# The request was a signup request
 			if request.POST['password'] == request.POST['confirm_password']:
 				# Make the user object that we will save to the db
 				# See: https://docs.djangoproject.com/en/1.11/ref/contrib/auth/#django.contrib.auth.models.User 
 				# 	for more information. If, for a specific use case, we need a new field for the user (e.g. Boolean 
 				#   for "paid"), we can exend this user default user object and create a sublcass.
-				user = User.objects.create_user()
-				user.username   = request.POST['username']
+				user = User.objects.create_user(request.POST['username'])
 				user.set_password(request.POST['password'])  ## This is important. In order to be secure, this is what
 															 ## we need to do to make sure that raw passwords aren't stored 
 															 ## in the database. See 
@@ -38,25 +42,26 @@ def index(request):
 				login(request, user)
 
 				# Success redirect
-				redirect('/user_page/')
+				return redirect('/user_page/')
 			else:
 				# Failure redirect
 				template = loader.get_template('login/index.html')
 				context = { "error" : "Incorrect username or password. Please try again." }
 				return HttpResponse(template.render(context, request))
 
-		elif request.POST['username'] and request.POST['password']:
+		elif request.POST.get('username', False) and request.POST.get('password', False):
 			# The request was a login request
 			username = request.POST['username']
 			password = request.POST['password']
-			user = authenticate(username, password)
+			
+			user = authenticate(request, username=username, password=password)
 
 			if user is not None:
 				# Correct username / password
 				login(request, user)
 
 				# Success redirect
-				redirect('/user_page/')
+				return redirect('/user_page/')
 			else:
 				# Failure redirect
 				template = loader.get_template('login/index.html')
