@@ -17,6 +17,9 @@ urlpatterns = [
     # /login/
     url(r'^login/', include('login.urls'), name="login"),
 
+    # /user_page/
+    url(r'^user_page/', include('user_page.urls'), name="user_page"),
+
     # Tells Django to redirect us to the default admin module that Django gives us if
     # the incoming request is for '/admin/'
     url(r'^admin/', admin.site.urls),
