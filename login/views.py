@@ -7,7 +7,6 @@ from django.template import loader
 from django.contrib.auth import authenticate, login
 from .models import User
 
-# Create your views here.
 def index(request):
 	if request.method == "GET": 
 		# Check if the user is already logged in
@@ -20,7 +19,7 @@ def index(request):
 			# Redirect back to the home page
 			return redirect('/user_page/')
 	elif request.method == "POST":
-		# Actually log the user object in
+		# Check if this is a signup request
 		if request.POST.get('first_name', False) and request.POST.get('last_name', False) and request.POST.get('email', False) and request.POST.get('username', False) and request.POST.get('password', False) and request.POST.get('confirm_password', False):
 			# The request was a signup request
 			if request.POST['password'] == request.POST['confirm_password']:
@@ -29,7 +28,7 @@ def index(request):
 				# 	for more information. If, for a specific use case, we need a new field for the user (e.g. Boolean 
 				#   for "paid"), we can exend this user default user object and create a sublcass.
 				user = User.objects.create_user(request.POST['username'])
-				user.set_password(request.POST['password'])  ## This is important. In order to be secure, this is what
+				user.set_password(request.POST['password'])  ## Using set_password() is important. In order to be secure, this is what
 															 ## we need to do to make sure that raw passwords aren't stored 
 															 ## in the database. See 
 															 ## https://docs.djangoproject.com/en/1.11/topics/auth/default/#changing-passwords 
@@ -48,7 +47,7 @@ def index(request):
 				template = loader.get_template('login/index.html')
 				context = { "error" : "Incorrect username or password. Please try again." }
 				return HttpResponse(template.render(context, request))
-
+		# Check if this is a login request
 		elif request.POST.get('username', False) and request.POST.get('password', False):
 			# The request was a login request
 			username = request.POST['username']
