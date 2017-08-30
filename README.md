@@ -11,20 +11,20 @@ In order to run:
 
 Clone the repository:
 ```
-cd <some directory where you want this to be>
-git init
-git remote add origin https://github.com/ssss1029/django_example.git
-git pull origin master
+$ cd <some directory where you want this to be>
+$ git init
+$ git remote add origin https://github.com/ssss1029/django_example.git
+$ git pull origin master
 ```
 
 Make sure Django is installed, if you haven't already:
 ```
-pip install django
+$ pip install django
 ```
 
 Run the server:
 ```
-python manage.py runserver
+$ python manage.py runserver
 ```
 
 The site should be live at `http://127.0.0.1/`. You will probably need to create a new user in order to use the website using the `/login/` endpoint.
