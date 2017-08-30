@@ -34,5 +34,13 @@ def index(request):
 def processChange(request):
 	if not request.user.is_authenticated:
 		return HttpResponse("Error: Not Authenticated")
+
+	# Check if it is a remove type request or add type request
+	if request.POST.get("book_title", False) and request.POST.get("book_author", False):
+		# The request is an add request
+		return HttpResponse("ok")			
+	elif request.POST.get("book_id", False):
+		# The request is a delete request
+		return HttpResponse("ok")					
 	else:
-		return HttpResponse("ok")
+		return HttpResponse("Error: Invalid POST parameters")			

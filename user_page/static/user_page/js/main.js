@@ -71,7 +71,17 @@ $(document).ready(function() {
 				}
 			}).done(function(msg) {
 				console.log(msg)
+				
+				if (msg != "ok") {
+					// There has been an error that didnt crash the server
+					alert(msg)
+				} else {
+					// All was good
+
+				}
+
 			}).fail(function(jqXHR, textStatus) {
+				// Something crashed the server
 				console.log("Failed: " + textStatus)
 			});
 		}
