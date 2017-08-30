@@ -162,6 +162,7 @@ textarea {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
+  cursor: pointer;
 }
 .button:hover, .button:focus {
   background: #179b77;
@@ -187,4 +188,22 @@ textarea {
   width: 100%;
   text-align: center;
   color: #FFFFFF;
+}
+
+.inline {
+  display: inline;
+
+}
+
+.book_remove_div {
+  float: right;
+}
+
+.book_details {
+  height: 40px;
+  color: #FFFFFF;
+}
+
+.book_title {
+  font-size: 120%;
 }

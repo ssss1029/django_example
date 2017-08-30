@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Login</title>
+		<title>User Page</title>
 
 		<!-- Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
@@ -46,7 +46,7 @@
 				        				{{ book.title }}, by: {{book.author}} 
 			        				</div>
 			        				<div class="book_remove_div inline">
-			        					<button class="book_remove_button" />
+			        					<button class="book_remove_button" pk="{{book.pk}}"> Delete this book </button>
 			        				</div>
 			        			</li>
 			        		{% endfor %}
@@ -75,7 +75,7 @@
 					<button id="submit_new_favorite_book" class="button button-block"> Submit </button>
 		        </div>
 	    	</div><!-- tab-content -->
-	    	<h2 class="logout"> Logout </h2>
+	    	<h2 class="logout"> <a href="/login/logout"> Logout </a> </h2>
 	    	<p class="creds"> Creds to Eric (https://codepen.io/ehermanson/pen/KwKWEv) for the design </p>
 		</div>
 	</body>

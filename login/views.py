@@ -4,8 +4,12 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
 # Authentication imports
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .models import User
+
+def logout_view(request):
+	logout(request)
+	return redirect("/")
 
 def index(request):
 	if request.method == "GET": 

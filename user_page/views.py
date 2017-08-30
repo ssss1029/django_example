@@ -38,9 +38,19 @@ def processChange(request):
 	# Check if it is a remove type request or add type request
 	if request.POST.get("book_title", False) and request.POST.get("book_author", False):
 		# The request is an add request
+		book_title  = request.POST.get("book_title", False)
+		book_author = request.POST.get("book_author", False)
+
+		new_book = Book(title=book_title, author=book_author)
+		new_book.save()
+		request.user.favorited_books.add(new_book)
+
 		return HttpResponse("ok")			
-	elif request.POST.get("book_id", False):
+	elif request.POST.get("book_pk", False):
 		# The request is a delete request
-		return HttpResponse("ok")					
+		primary_key = request.POST.get("book_pk", False)
+		request.user.favorited_books.remove(Book.objects.get(pk=primary_key))
+		Book.objects.get(pk=primary_key).delete()
+		return HttpResponse("ok")
 	else:
 		return HttpResponse("Error: Invalid POST parameters")			

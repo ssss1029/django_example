@@ -62,11 +62,11 @@ $(document).ready(function() {
 			 *   - We need to send the csrfmiddlewaretoken along with every request. If you inspect element/view source, you can see that we have a hidden text <input> with a name=csrfmiddlewaretoken and a random string for a value. This is pre-set by Django in order to stop CSRF attacks (read more about how you can do a CSRF attack online). If you look at the source code for index.html on the Django template, there is a {% csrf_token %} tag, and all it does is drop the csrfmiddlewaretoken <input> into our html page. All we have to do to take advantage of this security is send the csrfmiddlewaretoken value with every request we make to the backend.
 			 **/
 			var request = $.ajax({
-				url : '/user_page/processChange/',
+				url    : '/user_page/processChange/',
 				method : 'POST',
-				data : {
-					'title'               : title,
-					'author'              : author, 
+				data   : {
+					'book_title'          : title,
+					'book_author'         : author, 
 					'csrfmiddlewaretoken' : csrfmiddlewaretoken
 				}
 			}).done(function(msg) {
@@ -76,8 +76,8 @@ $(document).ready(function() {
 					// There has been an error that didnt crash the server
 					alert(msg)
 				} else {
-					// All was good
-
+					// All was good, refresh page to see new results
+					location.reload()
 				}
 
 			}).fail(function(jqXHR, textStatus) {
@@ -86,4 +86,34 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	$('.book_remove_button').on('click', function(e) {
+		e.preventDefault();
+
+		var pk = $(this).attr('pk');
+		var csrfmiddlewaretoken = $('input[name=csrfmiddlewaretoken]').val()
+		
+		var request = $.ajax({
+			url    : '/user_page/processChange/',
+			method : 'POST',
+			data   : {
+				'book_pk'             : pk,
+				'csrfmiddlewaretoken' : csrfmiddlewaretoken
+			}
+		}).done(function(msg) {
+			console.log(msg)
+			
+			if (msg != "ok") {
+				// There has been an error that didnt crash the server
+				alert(msg)
+			} else {
+				// All was good, refresh page to see new results
+				location.reload()
+			}
+
+		}).fail(function(jqXHR, textStatus) {
+			// Something crashed the server
+			console.log("Failed: " + textStatus)
+		});
+	})
 });
