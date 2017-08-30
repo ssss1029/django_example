@@ -7,7 +7,6 @@ from django.template import loader
 from .models import Book
 from login.models import User
 
-# Create your views here.
 def index(request):
 	if not request.user.is_authenticated:
 		not_authenticated_html = "<h1>Welcome to the user page. You are not authenticated</h1>"
@@ -31,3 +30,9 @@ def index(request):
 				'books' : request.user.favorited_books.all()
 			}
 			return HttpResponse(template.render(context, request))
+
+def processChange(request):
+	if not request.user.is_authenticated:
+		return HttpResponse("Error: Not Authenticated")
+	else:
+		return HttpResponse("ok")

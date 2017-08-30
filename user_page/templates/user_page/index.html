@@ -56,6 +56,23 @@
 		        
 		        <div id="fav_books">   
 					<h1>Add a favorite book:</h1>
+					<!-- I'm not using a <form> here, going to use JavaScript to send stuff back to the server instead -->
+					<div class="top-row">
+						{% csrf_token %}
+						<div class="field-wrap">
+				            <label>
+				            	Title<span class="req">*</span>
+				            </label>
+              				<input type="text" id="title_input" name="title" required autocomplete="on" />
+				   	 	</div>
+		            	<div class="field-wrap">
+			              	<label>
+			            	    Author<span class="req">*</span>
+			            	</label>
+            				<input type="text" id="author_input" name="author" required autocomplete="on"/>
+						</div>
+					</div>
+					<button id="submit_new_favorite_book" class="button button-block"> Submit </button>
 		        </div>
 	    	</div><!-- tab-content -->
 	    	<h2 class="logout"> Logout </h2>
